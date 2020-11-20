@@ -4,6 +4,8 @@ class Scene1 extends Phaser.Scene {
   }
   preload() {
     this.load.image("player", "assets/img/main character.png");
+    this.load.image("star1", "assets/img/generic star.png");
+
   }
 
   create() {
