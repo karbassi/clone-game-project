@@ -4,6 +4,14 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
+       this.background = this.add.tileSprite(
+         0,
+         0,
+         config.width,
+         config.height,
+         'background'
+       );
+       this.background.setOrigin(0, 0);
     this.player = this.physics.add.sprite(
       config.width / 2 - 8,
       config.height - 64,
@@ -14,10 +22,10 @@ class Scene2 extends Phaser.Scene {
     this.player.play('player.anim');
     this.player.setInteractive();
 
-    this.add.text(20, 20, 'clone', {
-      font: '30px Arial',
-      fill: 'white',
-    });
+    //this.add.text(20, 20, 'clone', {
+    //  font: '30px Arial',
+    //  fill: 'white',
+    //});
     this.ship = this.physics.add.sprite(config.width / 2, config.height / 2, 'ship');
 
     //input keys
