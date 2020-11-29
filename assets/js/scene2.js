@@ -4,34 +4,71 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-    //add player to the canvas of the game
-    this.player = this.add.image(
-      config.width / 3 - 50,
-      config.height / 1.3,
-      "player");
-    this.player.setScale(0.02);
-    //add the target star to the game canvas
-    this.star1 = this.add.image(
-      config.width/ 2,
-      config.height/3,"star1"
+    this.player = this.physics.add.sprite(
+      config.width / 2 - 8,
+      config.height - 64,
+      'player'
     );
-    this.star1.setScale(0.02);
-    this.add.text(20, 20, 'clone', { font: '25px Arial', fill: 'white' });
+    this.player.setScale(2);
+
+    this.player.play('player.anim');
+    this.player.setInteractive();
+
+    this.add.text(20, 20, 'clone', {
+      font: '30px Arial',
+      fill: 'white',
+    });
+    this.ship = this.physics.add.sprite(config.width / 2, config.height / 2, 'ship');
+
+    //input keys
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.physics.world.setBoundsCollision();
+    this.player.setCollideWorldBounds(true);
+
+    this.physics.add.overlap(
+      this.player,
+      this.ship,
+      this.shipPickup,
+      null,
+      this
+    );
   }
-  movePlayer(player, speed) {
-    player.y += speed;
-    if(player.y > config.height){
-      this.resetPlayerPos(player);
+
+  shipPickup(player, ship) {
+    ship.disableBody(true, true);
+  }
+
+  update() {
+    //this.movePlayer(this.player, 1);
+    this.movePlayerManager();
+  }
+
+  movePlayerManager() {
+    this.player.setVelocity(0);
+
+    if (this.cursorKeys.left.isDown) {
+      this.player.setVelocityX(-gameSettings.playerSpeed);
+    } else if (this.cursorKeys.right.isDown) {
+      this.player.setVelocityX(gameSettings.playerSpeed);
     }
-  }
-  resetPlayerPos(player){
-    player.y =0;
-    var randomX = Phaser.Math.Between(0, config.width);
-    player.x = randomX;
-  }
-  update(){
-    this.movePlayer(this.player, 1);
+
+    if (this.cursorKeys.up.isDown) {
+      this.player.setVelocityY(-gameSettings.playerSpeed);
+    } else if (this.cursorKeys.down.isDown) {
+      this.player.setVelocityY(gameSettings.playerSpeed);
+    }
   }
 }
 
+//movePlayer(player, speed) {
+// player.y += speed;
+//if (player.y > config.height) {
+// this.resetPlayerPos(player);
+//}
+//}
 
+//resetPlayerPos(ship) {
+//player.y = 0;
+// var randomX = phaser.Math.Between(0, config.width);
+// player.y = randomX;
+//}
