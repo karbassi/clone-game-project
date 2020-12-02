@@ -1,6 +1,7 @@
 class Scene2 extends Phaser.Scene {
   constructor() {
     super('playGame');
+
   }
 
   create() {
@@ -32,7 +33,12 @@ class Scene2 extends Phaser.Scene {
 
     //create the score label and score counter.
     this.score = 0;
-    this.scoreLabel = this.add.bitmapText(10, 10, 'gameFont', 'SCORE', 16);
+    this.scoreText = this.add.text(16, 16, 'score: 0', {
+      fontSize: '16px',
+      fill: '#ffff',
+    });
+
+
 
     this.physics.add.overlap(
       this.player,
@@ -50,10 +56,10 @@ class Scene2 extends Phaser.Scene {
 
   starPickup(player, star) {
     star.disableBody(true, true);
-    //this.star.play('collide');
-    this.score += 10;
     var collision = new Collision(this, star.x, star.y);
     this.resetStarPos(star);
+    this.score += 1;
+    this.scoreText.setText('score: ' + this.score);
   }
 
   update() {
@@ -84,15 +90,13 @@ class Scene2 extends Phaser.Scene {
   //}
   //}
 
-
-
   resetStarPos() {
     var randomX = Phaser.Math.Between(0, config.width);
     this.star.x = randomX;
     var randomY = Phaser.Math.Between(0, config.height);
     this.star.y = randomY;
     this.star.enableBody(true, randomX, randomY);
-    this.star.visible =true;
+    this.star.visible = true;
   }
 }
 
