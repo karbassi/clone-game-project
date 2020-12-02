@@ -4,46 +4,56 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-       this.background = this.add.tileSprite(
-         0,
-         0,
-         config.width,
-         config.height,
-         'background'
-       );
-       this.background.setOrigin(0, 0);
+    this.background = this.add.tileSprite(
+      0,
+      0,
+      config.width,
+      config.height,
+      'background'
+    );
+    this.background.setOrigin(0, 0);
+
     this.player = this.physics.add.sprite(
       config.width / 2 - 8,
       config.height - 64,
       'player'
     );
-    this.player.setScale(2);
-
+    this.player.setScale(0.8);
     this.player.play('player.anim');
-    this.player.setInteractive();
 
-    //this.add.text(20, 20, 'clone', {
-    //  font: '30px Arial',
-    //  fill: 'white',
-    //});
-    this.ship = this.physics.add.sprite(config.width / 2, config.height / 2, 'ship');
+    //this.player.setInteractive();
+
+    this.star = this.physics.add.sprite(
+      config.width / 2,
+      config.height / 2,
+      'star'
+    );
+    this.star.setScale(0.8);
+
+    //create the score label and score counter.
+    this.score = 0;
+    this.scoreLabel = this.add.bitmapText(10, 10, 'gameFont', 'SCORE', 16);
+
+    this.physics.add.overlap(
+      this.player,
+      this.star,
+      this.starPickup,
+      null,
+      this
+    );
 
     //input keys
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.physics.world.setBoundsCollision();
     this.player.setCollideWorldBounds(true);
-
-    this.physics.add.overlap(
-      this.player,
-      this.ship,
-      this.shipPickup,
-      null,
-      this
-    );
   }
 
-  shipPickup(player, ship) {
-    ship.disableBody(true, true);
+  starPickup(player, star) {
+    star.disableBody(true, true);
+    //this.star.play('collide');
+    this.score += 10;
+    var collision = new Collision(this, star.x, star.y);
+    this.resetStarPos(star);
   }
 
   update() {
@@ -66,17 +76,28 @@ class Scene2 extends Phaser.Scene {
       this.player.setVelocityY(gameSettings.playerSpeed);
     }
   }
+
+  //movePlayer(player, speed) {
+  //player.y += speed;
+  //if (player.y > config.height) {
+  //this.resetPlayerPos(player);
+  //}
+  //}
+
+
+
+  resetStarPos() {
+    var randomX = Phaser.Math.Between(0, config.width);
+    this.star.x = randomX;
+    var randomY = Phaser.Math.Between(0, config.height);
+    this.star.y = randomY;
+    this.star.enableBody(true, randomX, randomY);
+    this.star.visible =true;
+  }
 }
 
-//movePlayer(player, speed) {
-// player.y += speed;
-//if (player.y > config.height) {
-// this.resetPlayerPos(player);
-//}
-//}
-
-//resetPlayerPos(ship) {
-//player.y = 0;
-// var randomX = phaser.Math.Between(0, config.width);
-// player.y = randomX;
-//}
+//to do
+//make star appear in random place after collision
+//include enemies
+//explosion when there is a colision with enemies
+//enemies move in the most recent pathway of the player
