@@ -1,7 +1,6 @@
 class Scene2 extends Phaser.Scene {
   constructor() {
     super('playGame');
-
   }
 
   create() {
@@ -31,14 +30,21 @@ class Scene2 extends Phaser.Scene {
     );
     this.star.setScale(0.8);
 
+    this.clone = this.physics.add.sprite(
+      config.width / 2 + 100,
+      config.height / 2,
+      'clone'
+    );
+    this.clone.setScale(0.8);
+    this.clone.disableBody(true, true);
+    this.clone.play('clone.anim');
+
     //create the score label and score counter.
     this.score = 0;
     this.scoreText = this.add.text(16, 16, 'score: 0', {
       fontSize: '16px',
       fill: '#ffff',
     });
-
-
 
     this.physics.add.overlap(
       this.player,
@@ -60,7 +66,17 @@ class Scene2 extends Phaser.Scene {
     this.resetStarPos(star);
     this.score += 1;
     this.scoreText.setText('score: ' + this.score);
+    this.resetClonePos(this.clone);
+
   }
+
+  //cloneCollision(player, clone) {
+  //clone.disableBody(true, true);
+  //var collision = new Explosion(this, star.x, star.y);
+  t; //his.resetStarPos(player);
+  // this.clone.enableBody(true, randomX, randomY);
+  //this.clone.visible = true;
+  // }
 
   update() {
     //this.movePlayer(this.player, 1);
@@ -89,6 +105,15 @@ class Scene2 extends Phaser.Scene {
   //this.resetPlayerPos(player);
   //}
   //}
+  resetClonePos() {
+    var randomX = Phaser.Math.Between(0, config.width);
+    this.clone.x = randomX;
+    var randomY = Phaser.Math.Between(0, config.height);
+    this.clone.y = randomY;
+    this.clone.enableBody(true, randomX, randomY);
+    this.clone.visible = true;
+    this.clone.play('clone.anim');
+  }
 
   resetStarPos() {
     var randomX = Phaser.Math.Between(0, config.width);
@@ -101,7 +126,7 @@ class Scene2 extends Phaser.Scene {
 }
 
 //to do
-//make star appear in random place after collision
+
 //include enemies
 //explosion when there is a colision with enemies
 //enemies move in the most recent pathway of the player

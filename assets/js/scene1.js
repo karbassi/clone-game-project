@@ -7,14 +7,19 @@ class Scene1 extends Phaser.Scene {
     this.load.image('background', 'assets/img/background.png');
     //this.load.image('star', 'assets/img/wild card star.png');
 
-    this.load.spritesheet('player', 'assets/spritesheets/player.png', {
-      frameWidth:66,
+   this.load.spritesheet('player', 'assets/spritesheets/player.png', {
+      frameWidth:65,
       frameHeight: 68,
     });
     this.load.spritesheet('star', 'assets/spritesheets/star.png', {
       frameWidth: 67,
       frameHeight: 68,
     })
+    this.load.spritesheet('clone', 'assets/spritesheets/clone.png', {
+      frameWidth: 65,
+      frameHeight: 68,
+    })
+
     this.load.spritesheet("collision", "assets/spritesheets/collision.png",{
       frameWidth: 67,
       frameHeight: 67,
@@ -34,6 +39,12 @@ class Scene1 extends Phaser.Scene {
       key: 'player.anim',
       frames: this.anims.generateFrameNumbers('player'),
       frameRate: 5,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: 'clone.anim',
+      frames: this.anims.generateFrameNumbers('clone'),
+      frameRate: 10,
       repeat: -1,
     });
 
