@@ -49,8 +49,8 @@ class Scene2 extends Phaser.Scene {
     // clone.setActive(false).setVisible(false);
 
     //add game play sound
-    //this.gameSound = this.sound.add('gamemusic');
-    //this.gameSound.play();
+    this.gameSound = this.sound.add('gamemusic');
+    this.gameSound.play();
 
     //create the score label and score counter.
     this.score = 0;
@@ -76,8 +76,7 @@ class Scene2 extends Phaser.Scene {
       this
     );
 
-    //this.player.setInteractive();
-    //this.clone.setInteractive();
+
 
     //input keys
     this.cursorKeys = this.input.keyboard.createCursorKeys();
