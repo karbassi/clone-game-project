@@ -61,7 +61,6 @@ class Scene2 extends Phaser.Scene {
   }
 
   starPickup(player, star) {
-    star.disableBody(true, true);
     var collision = new Collision(this, star.x, star.y);
     this.resetStarPos(star);
     this.score += 1;
