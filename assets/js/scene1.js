@@ -40,7 +40,9 @@ class Scene1 extends Phaser.Scene {
     //load audio files for entire game play
     this.load.audio('gamemusic', 'assets/sounds/gameplay.mp3');
     //load audio files for star pick up for points.
-    this.load.audio('starpickup', 'assets/sounds/starpickup.mp3');
+    this.load.audio('starpickup', 'assets/sounds/starpickup.wav');
+    //load audio files for clone collision for points
+    this.load.audio('collide', 'assets/sounds/collision.mp3');
 
     this.load.bitmapFont(
       'gameFont',
@@ -66,6 +68,12 @@ class Scene1 extends Phaser.Scene {
       frameRate: 5,
       repeat: -1,
     });
+    this.anims.create({
+      key: 'clone1.anim',
+      frames: this.anims.generateFrameNumbers('clone1'),
+      frameRate: 5,
+      repeat: -1,
+    });
 // create collision animation for player star pick up
     this.anims.create({
       key: 'collide',
@@ -79,7 +87,7 @@ class Scene1 extends Phaser.Scene {
     this.anims.create({
       key: 'explode',
       frames: this.anims.generateFrameNumbers('explosion'),
-      frameRate: 20,
+      frameRate: 10,
       repeat: 0,
       hideOnComplete: true,
     });

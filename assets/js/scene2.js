@@ -21,7 +21,7 @@ class Scene2 extends Phaser.Scene {
     this.player.setScale(0.7);
     this.player.play('player.anim');
 
-    //this.player.setInteractive();
+
     //added star physics
     this.star = this.physics.add.sprite(randomX, randomY, 'star');
     var randomX = Phaser.Math.Between(0, config.width);
@@ -32,8 +32,8 @@ class Scene2 extends Phaser.Scene {
     this.star.setCollideWorldBounds(true);
 
     this.clone2 = this.physics.add.group();
-    this.clone2.enableBody = true;
-    this.clone2.collideWorldBounds = true;
+    //this.clone2.enableBody = true;
+   // this.clone2.collideWorldBounds = true;
     //this.clone2.physicsBodyType = Phaser.Physics.ARCADE;
 
     //this.clone1.enablebody(true, true);
@@ -49,7 +49,7 @@ class Scene2 extends Phaser.Scene {
     // clone.setActive(false).setVisible(false);
 
     //add game play sound
-    // this.gameSound = this.sound.add('gamemusic');
+    //this.gameSound = this.sound.add('gamemusic');
     //this.gameSound.play();
 
     //create the score label and score counter.
@@ -107,15 +107,20 @@ class Scene2 extends Phaser.Scene {
   createClone() {
     var clone = new Clone(this);
     this.clone2.setVelocity(80, 20);
+    //this.clone2.setBounce(1);
 
     //this.clone1.body.setBounce(0.9);
-    //this.clone2.setBounce(1);
     //this.clone1.enable(true);
   }
 
   cloneCollision(player, clone1) {
     var explosion = new Explosion(this, player.x, player.y);
+    this.clonepickupSound = this.sound.add('collide');
+    this.clonepickupSound.play();
     this.player.destroy;
+    this.player.disableBody(true, true);
+    this.player.visible = false;
+    this.add.text(config.width/2, config.height/2, "GameOver");
   }
   //this.makeClonePos(clone);
   //this.clone = new Clone(this);
@@ -125,7 +130,7 @@ class Scene2 extends Phaser.Scene {
   update() {
     //this.movePlayer(this.player, 0);
     this.movePlayerManager();
-    //this.physics.world.collide(this.player, this.clone);
+
   }
 
   movePlayerManager() {
@@ -160,14 +165,7 @@ class Scene2 extends Phaser.Scene {
     this.star.setCollideWorldBounds(true);
     this.star.visible = true;
   }
-  resetPlayerPos() {
-    var randomX = Phaser.Math.Between(0, config.width);
-    this.player.x = randomX;
-    var randomY = Phaser.Math.Between(0, config.height);
-    this.player.y = randomY;
-    this.player.enableBody(true, randomX, randomY);
-    this.player.setCollideWorldBounds(true);
-  }
+
 
   //destroyPlayer(player, clone) {
   //player.setTexture('Explosion');
