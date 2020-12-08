@@ -3,21 +3,24 @@ var gameSettings = {
   playerSpeed: 200,
 };
 
-//this definition of the background is to make it the size of mobile.
 var config = {
-  ScaleMode: Phaser.Scale.FIT,
+  //ScaleMode: Phaser.Scale.AUTO,
   type: Phaser.Auto,
-  width: 414,
-  height: 736,
-  //this background color is the color of the game
+  //game canvas size is Iphone SE
+  width: 320,
+  height: 568,
+  //this background color is the color of the game.
+  //though I use a background, I still considered including
+  //this colored background
   backgroundColor: 0xd9ded7,
   scene: [Scene1, Scene2],
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
-    }
-  }
+      debug: false,
+    },
+  },
 };
 
+//calling game control functions
 var game = new Phaser.Game(config);

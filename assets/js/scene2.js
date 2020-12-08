@@ -14,35 +14,49 @@ class Scene2 extends Phaser.Scene {
     this.background.setOrigin(0, 0);
 
     this.player = this.physics.add.sprite(
-      config.width / 2 - 8,
-      config.height - 64,
+      config.width / 2,
+      config.height / 2,
       'player'
     );
-    this.player.setScale(0.8);
+    this.player.setScale(0.7);
     this.player.play('player.anim');
 
     //this.player.setInteractive();
 
-    this.star = this.physics.add.sprite(
-      config.width / 2,
-      config.height / 2,
-      'star'
-    );
-    this.star.setScale(0.8);
+    this.star = this.physics.add.sprite(randomX, randomY, 'star');
+    var randomX = Phaser.Math.Between(0, config.width);
+    this.star.x = randomX;
+    var randomY = Phaser.Math.Between(0, config.height);
+    this.star.y = randomY;
+    this.star.setScale(0.7);
+    this.star.setCollideWorldBounds(true);
 
-    this.clone = this.physics.add.sprite(
-      config.width / 2 + 100,
-      config.height / 2,
-      'clone'
-    );
-    this.clone.setScale(0.8);
-    this.clone.disableBody(true, true);
-    this.clone.play('clone.anim');
+    this.clone2 = this.physics.add.group();
+    this.clone2.enableBody = true;
+    this.clone2.collideWorldBounds=true;
+    //this.clone2.physicsBodyType = Phaser.Physics.ARCADE;
+
+    //this.clone1.enablebody(true, true);
+    //this.clone1.setBounce(1);
+    //this.clone.setVelocity(80, 20);
+    //this.clone.CollideWorldBounds(true);
+    //var clone = new Clone(this);
+    //var clone = new Clone(this);
+    //clone.x = randomX;
+    //clone.y = randomY;
+    //this.clone.setScale(0.8);
+    //clone1.disableBody(true, true);
+    // clone.setActive(false).setVisible(false);
+
+    //add game play sound
+    // this.gameSound = this.sound.add('gamemusic');
+    //this.gameSound.play();
 
     //create the score label and score counter.
     this.score = 0;
     this.scoreText = this.add.text(16, 16, 'score: 0', {
       fontSize: '16px',
+      fontFamily: 'arial black',
       fill: '#ffff',
     });
 
@@ -52,34 +66,69 @@ class Scene2 extends Phaser.Scene {
       this.starPickup,
       null,
       this
-    );
+      );
 
-    //input keys
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
-    this.physics.world.setBoundsCollision();
-    this.player.setCollideWorldBounds(true);
+      this.physics.add.overlap(
+        this.player,
+        this.clone2,
+        this.cloneCollision,
+        null,
+        this
+        );
+
+        //this.player.setInteractive();
+        //this.clone.setInteractive();
+
+        //input keys
+        this.cursorKeys = this.input.keyboard.createCursorKeys();
+        this.physics.world.setBoundsCollision(true);
+        this.player.setCollideWorldBounds(true);
+        //this.clone1.setcollideWorldBounds(true);
+
+        //var maxObjects = 1;
+        //for (var i = 0; i <= maxObjects; i++) {
+          //var clone = new Clone(this);
+          //clone.setRandomPosition(0, 0, game.config.width, game.config.height);
+          //}
+        }
+
+        starPickup(player, star) {
+          var collision = new Collision(this, star.x, star.y);
+          this.resetStarPos(star);
+          //add starpickupsound
+          this.starpickupSound = this.sound.add('starpickup');
+          this.starpickupSound.play();
+          //add score counter
+          this.score += 1;
+          this.scoreText.setText('score: ' + this.score);
+          this.createClone();
+
+        }
+    
+
+        createClone() {
+          var clone = new Clone(this);
+          this.clone2.setVelocity(80, 20);
+
+    //this.clone1.body.setBounce(0.9);
+    //this.clone2.setBounce(1);
+    //this.clone1.enable(true);
   }
 
-  starPickup(player, star) {
-    var collision = new Collision(this, star.x, star.y);
-    this.resetStarPos(star);
-    this.score += 1;
-    this.scoreText.setText('score: ' + this.score);
-    this.resetClonePos(this.clone);
+  cloneCollision(player, clone1) {
+    var explosion = new Explosion(this, player.x, player.y);
+    this.player.destroy;
 
   }
-
-  //cloneCollision(player, clone) {
-  //clone.disableBody(true, true);
-  //var collision = new Explosion(this, star.x, star.y);
-  t; //his.resetStarPos(player);
-  // this.clone.enableBody(true, randomX, randomY);
-  //this.clone.visible = true;
-  // }
+  //this.makeClonePos(clone);
+  //this.clone = new Clone(this);
+  //this.clone.disableBody(true, true);
+  //this.clone.visible = false;
 
   update() {
-    //this.movePlayer(this.player, 1);
+    //this.movePlayer(this.player, 0);
     this.movePlayerManager();
+    //this.physics.world.collide(this.player, this.clone);
   }
 
   movePlayerManager() {
@@ -99,20 +148,11 @@ class Scene2 extends Phaser.Scene {
   }
 
   //movePlayer(player, speed) {
-  //player.y += speed;
-  //if (player.y > config.height) {
+  //player += speed;
+  //if (player > config.height) {
   //this.resetPlayerPos(player);
   //}
   //}
-  resetClonePos() {
-    var randomX = Phaser.Math.Between(0, config.width);
-    this.clone.x = randomX;
-    var randomY = Phaser.Math.Between(0, config.height);
-    this.clone.y = randomY;
-    this.clone.enableBody(true, randomX, randomY);
-    this.clone.visible = true;
-    this.clone.play('clone.anim');
-  }
 
   resetStarPos() {
     var randomX = Phaser.Math.Between(0, config.width);
@@ -120,12 +160,23 @@ class Scene2 extends Phaser.Scene {
     var randomY = Phaser.Math.Between(0, config.height);
     this.star.y = randomY;
     this.star.enableBody(true, randomX, randomY);
+    this.star.setCollideWorldBounds(true);
     this.star.visible = true;
   }
+  resetPlayerPos() {
+    var randomX = Phaser.Math.Between(0, config.width);
+    this.player.x = randomX;
+    var randomY = Phaser.Math.Between(0, config.height);
+    this.player.y = randomY;
+    this.player.enableBody(true, randomX, randomY);
+    this.player.setCollideWorldBounds(true);
+  }
+
+  //destroyPlayer(player, clone) {
+  //player.setTexture('Explosion');
+  //player.play('explode');
+  //}
 }
-
 //to do
-
-//include enemies
 //explosion when there is a colision with enemies
 //enemies move in the most recent pathway of the player

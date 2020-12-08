@@ -4,65 +4,84 @@ class Scene1 extends Phaser.Scene {
   }
 
   preload() {
+    //load game background
     this.load.image('background', 'assets/img/background.png');
-    //this.load.image('star', 'assets/img/wild card star.png');
-
-   this.load.spritesheet('player', 'assets/spritesheets/player.png', {
-      frameWidth:65,
+    //load game play assets
+    this.load.image('star2', 'assets/img/wild card star.png');
+    this.load.spritesheet('player', 'assets/spritesheets/player01.png', {
+      frameWidth: 65,
       frameHeight: 68,
     });
     this.load.spritesheet('star', 'assets/spritesheets/star.png', {
       frameWidth: 67,
       frameHeight: 68,
-    })
-    this.load.spritesheet('clone', 'assets/spritesheets/clone.png', {
+    });
+    this.load.spritesheet('clone1', 'assets/spritesheets/clone01.png', {
       frameWidth: 65,
       frameHeight: 68,
-    })
+    });
 
-    this.load.spritesheet("collision", "assets/spritesheets/collision.png",{
+    this.load.spritesheet('clone2', 'assets/spritesheets/clone.png', {
+      frameWidth: 65,
+      frameHeight: 68,
+    });
+    //load sprite animation for picking up a star
+    this.load.spritesheet('collision', 'assets/spritesheets/collision.png', {
       frameWidth: 67,
       frameHeight: 67,
-    })
-    this.load.spritesheet("explosion", "assets/spritesheets/explosion.png",{
+    });
+
+    // load sprite animation for player collision with clone
+    this.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', {
       frameWidth: 67,
       frameHeight: 67,
-    })
+    });
+    //load audio files
+    //load audio files for entire game play
+    this.load.audio('gamemusic', 'assets/sounds/gameplay.mp3');
+    //load audio files for star pick up for points.
+    this.load.audio('starpickup', 'assets/sounds/starpickup.mp3');
 
-    this.load.bitmapFont("gameFont", "assets/img/font/font.png", "assets/img/font/font.fnt");
+    this.load.bitmapFont(
+      'gameFont',
+      'assets/img/font/font.png',
+      'assets/img/font/font.fnt'
+    );
   }
   create() {
-    this.add.text(20, 20, 'clone');
+    //this.add.text(20, 20, 'clone');
     this.scene.start('playGame');
-
+//create animations for player
     this.anims.create({
       key: 'player.anim',
       frames: this.anims.generateFrameNumbers('player'),
-      frameRate: 5,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: 'clone.anim',
-      frames: this.anims.generateFrameNumbers('clone'),
-      frameRate: 10,
+      frameRate: 3,
       repeat: -1,
     });
 
+    //create animation  for clone.
+    this.anims.create({
+      key: 'clone.anim',
+      frames: this.anims.generateFrameNumbers('clone2'),
+      frameRate: 5,
+      repeat: -1,
+    });
+// create collision animation for player star pick up
     this.anims.create({
       key: 'collide',
       frames: this.anims.generateFrameNumbers('collision'),
       frameRate: 15,
       repeat: 0,
-      hideOnComplete: true
+      hideOnComplete: true,
     });
+
+    //create explosion animation for player collision with clone
     this.anims.create({
       key: 'explode',
       frames: this.anims.generateFrameNumbers('explosion'),
       frameRate: 20,
       repeat: 0,
-      hideOnComplete: true
+      hideOnComplete: true,
     });
-
-
   }
 }
