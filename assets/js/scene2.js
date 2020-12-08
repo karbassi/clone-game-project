@@ -22,7 +22,7 @@ class Scene2 extends Phaser.Scene {
     this.player.play('player.anim');
 
     //this.player.setInteractive();
-
+    //added star physics
     this.star = this.physics.add.sprite(randomX, randomY, 'star');
     var randomX = Phaser.Math.Between(0, config.width);
     this.star.x = randomX;
@@ -33,7 +33,7 @@ class Scene2 extends Phaser.Scene {
 
     this.clone2 = this.physics.add.group();
     this.clone2.enableBody = true;
-    this.clone2.collideWorldBounds=true;
+    this.clone2.collideWorldBounds = true;
     //this.clone2.physicsBodyType = Phaser.Physics.ARCADE;
 
     //this.clone1.enablebody(true, true);
@@ -66,49 +66,47 @@ class Scene2 extends Phaser.Scene {
       this.starPickup,
       null,
       this
-      );
+    );
 
-      this.physics.add.overlap(
-        this.player,
-        this.clone2,
-        this.cloneCollision,
-        null,
-        this
-        );
+    this.physics.add.overlap(
+      this.player,
+      this.clone2,
+      this.cloneCollision,
+      null,
+      this
+    );
 
-        //this.player.setInteractive();
-        //this.clone.setInteractive();
+    //this.player.setInteractive();
+    //this.clone.setInteractive();
 
-        //input keys
-        this.cursorKeys = this.input.keyboard.createCursorKeys();
-        this.physics.world.setBoundsCollision(true);
-        this.player.setCollideWorldBounds(true);
-        //this.clone1.setcollideWorldBounds(true);
+    //input keys
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.physics.world.setBoundsCollision(true);
+    this.player.setCollideWorldBounds(true);
+    //this.clone1.setcollideWorldBounds(true);
 
-        //var maxObjects = 1;
-        //for (var i = 0; i <= maxObjects; i++) {
-          //var clone = new Clone(this);
-          //clone.setRandomPosition(0, 0, game.config.width, game.config.height);
-          //}
-        }
+    //var maxObjects = 1;
+    //for (var i = 0; i <= maxObjects; i++) {
+    //var clone = new Clone(this);
+    //clone.setRandomPosition(0, 0, game.config.width, game.config.height);
+    //}
+  }
 
-        starPickup(player, star) {
-          var collision = new Collision(this, star.x, star.y);
-          this.resetStarPos(star);
-          //add starpickupsound
-          this.starpickupSound = this.sound.add('starpickup');
-          this.starpickupSound.play();
-          //add score counter
-          this.score += 1;
-          this.scoreText.setText('score: ' + this.score);
-          this.createClone();
+  starPickup(player, star) {
+    var collision = new Collision(this, star.x, star.y);
+    this.resetStarPos(star);
+    //add starpickupsound
+    this.starpickupSound = this.sound.add('starpickup');
+    this.starpickupSound.play();
+    //add score counter
+    this.score += 1;
+    this.scoreText.setText('score: ' + this.score);
+    this.createClone();
+  }
 
-        }
-    
-
-        createClone() {
-          var clone = new Clone(this);
-          this.clone2.setVelocity(80, 20);
+  createClone() {
+    var clone = new Clone(this);
+    this.clone2.setVelocity(80, 20);
 
     //this.clone1.body.setBounce(0.9);
     //this.clone2.setBounce(1);
@@ -118,7 +116,6 @@ class Scene2 extends Phaser.Scene {
   cloneCollision(player, clone1) {
     var explosion = new Explosion(this, player.x, player.y);
     this.player.destroy;
-
   }
   //this.makeClonePos(clone);
   //this.clone = new Clone(this);
