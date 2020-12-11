@@ -4,7 +4,7 @@ class Clone extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     scene.physics.world.setBoundsCollision(true);
     scene.physics.world.enableBody(this);
-    this.play('clone1.anim');
+    //this.play('clone1.anim');
     this.setScale(0.7);
     //this.body.setEnableBody(true);
     this.physicsBodyType = Phaser.Physics.ARCADE;
@@ -16,8 +16,5 @@ class Clone extends Phaser.GameObjects.Sprite {
     this.body.setVelocity(80, 20);
     this.body.setBounce(true);
 
-
-    scene.clone2.add(this);
-
-  }
-}
+  scene.clones.add(this);
+}}
