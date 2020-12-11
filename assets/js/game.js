@@ -12,12 +12,12 @@ var config = {
   //this background color is the color of the game.
   //though I use a background, I still considered including
   //this colored background
-  backgroundColor: 0xd9ded7,
+  backgroundColor: 0x920140,
   scene: [Scene1, Scene2],
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      debug: false,
     },
   },
 };

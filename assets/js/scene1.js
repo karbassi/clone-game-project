@@ -44,11 +44,6 @@ class Scene1 extends Phaser.Scene {
     //load audio files for clone collision for points
     this.load.audio('collide', 'assets/sounds/collision.mp3');
 
-    this.load.bitmapFont(
-      'gameFont',
-      'assets/img/font/font.png',
-      'assets/img/font/font.fnt'
-    );
   }
   create() {
     //this.add.text(20, 20, 'clone');

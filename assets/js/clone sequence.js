@@ -8,6 +8,7 @@ class Clone extends Phaser.GameObjects.Sprite {
     this.setScale(0.7);
     //this.body.setEnableBody(true);
     this.physicsBodyType = Phaser.Physics.ARCADE;
+    this.body.setSize(20, 20);
     var randomX = Phaser.Math.Between(0, config.width);
     this.body.x = randomX;
     var randomY = Phaser.Math.Between(0, config.height);
@@ -16,5 +17,6 @@ class Clone extends Phaser.GameObjects.Sprite {
     this.body.setVelocity(80, 20);
     this.body.setBounce(true);
 
-  scene.clones.add(this);
-}}
+    scene.clones.add(this);
+  }
+}
