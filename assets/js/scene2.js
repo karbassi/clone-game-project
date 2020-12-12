@@ -50,26 +50,9 @@ class Scene2 extends Phaser.Scene {
     });
 
     //create lives
-    var lives = 3;
-    var livesText;
-    var lifeLostText;
 
-    this.livesText = this.add.text(200, 16, 'lives: ' + lives, {
-      font: '16px Arial',
-      stroke: '#ffff',
-    });
-    //this.livesText.anchor.set(1, 0);
-    this.lifeLostText = this.add.text(
-      config.width * 0.5,
-      config.height * 0.5,
-      'Life lost, click to continue',
-      { font: '16px arial black', fill: '#ffff' }
-    );
-    //lifeLostText.anchor.set(0.5);
-    this.lifeLostText.visible = false;
 
     //create win star function
-
     this.physics.add.overlap(
       this.player,
       this.star,
@@ -107,24 +90,14 @@ class Scene2 extends Phaser.Scene {
 
   cloneCollision(player, clones) {
     var explosion = new Explosion(this, this.player.x, this.player.y);
-    this.player.destroy;
-    this.player.disableBody(true, true);
     this.clonepickupSound = this.sound.add('collide');
     this.clonepickupSound.play();
-    //this.player.visible = false;
-    if (this.lives) {
-      this.livesText.setText('Lives: ' + lives);
-      this.lifeLostText.visible = true;
-      this.player.reset(config.width * 0.5, config.height - 25);
-      game.input.onDown.addOnce(function () {
-        this.lifeLostText.visible = false;
-      }, this);
-    } else {
-      alert('You lost, game over!');
-      location.reload();
+    this.physics.pause();
+    this.player.disableBody(true, true);
+    this.player.destroy;
+    this.add.text(config.width / 2, config.height / 2, 'GameOver');
     }
-    //this.add.text(config.width / 2, config.height / 2, //'GameOver');
-  }
+
 
   update() {
     //this.movePlayer(this.player, 0);
