@@ -1,4 +1,4 @@
-//this scene is used to load up all game assets
+// this scene is used to load up all game assets
 
 class Scene1 extends Phaser.Scene {
   constructor() {
@@ -6,9 +6,10 @@ class Scene1 extends Phaser.Scene {
   }
 
   preload() {
-    //load game background
+    // load game background
     this.load.image('background', 'assets/img/background.png');
-    //load game play assets
+
+    // load game play assets
     this.load.image('star2', 'assets/img/wild card star.png');
     this.load.spritesheet('player', 'assets/spritesheets/player01.png', {
       frameWidth: 65,
@@ -23,8 +24,7 @@ class Scene1 extends Phaser.Scene {
       frameHeight: 68,
     });
 
-
-    //load sprite animation for picking up a star
+    // load sprite animation for picking up a star
     this.load.spritesheet('collision', 'assets/spritesheets/collision.png', {
       frameWidth: 67,
       frameHeight: 67,
@@ -35,18 +35,22 @@ class Scene1 extends Phaser.Scene {
       frameWidth: 67,
       frameHeight: 67,
     });
-    //load audio files
-    //load audio files for entire game play
-    this.load.audio('gamemusic', 'assets/sounds/gameplay.mp3');
-    //load audio files for star pick up for points.
-    this.load.audio('starpickup', 'assets/sounds/starpickup.wav');
-    //load audio files for clone collision for points
-    this.load.audio('collide', 'assets/sounds/collision.mp3');
 
+    // load audio files
+    // load audio files for entire game play
+    this.load.audio('gamemusic', 'assets/sounds/gameplay.mp3');
+
+    // load audio files for star pick up for points.
+    this.load.audio('starpickup', 'assets/sounds/starpickup.wav');
+
+    // load audio files for clone collision for points
+    this.load.audio('collide', 'assets/sounds/collision.mp3');
   }
+
   create() {
     this.scene.start('playGame');
-//create animations for player
+
+    // create animations for player
     this.anims.create({
       key: 'player.anim',
       frames: this.anims.generateFrameNumbers('player'),
@@ -54,20 +58,22 @@ class Scene1 extends Phaser.Scene {
       repeat: -1,
     });
 
-    //create animation  for clone.(is not used in current game play)
+    // create animation for clone.(is not used in current game play)
     this.anims.create({
       key: 'clone.anim',
       frames: this.anims.generateFrameNumbers('clone2'),
       frameRate: 5,
       repeat: -1,
     });
+
     this.anims.create({
       key: 'clone1.anim',
       frames: this.anims.generateFrameNumbers('clone1'),
       frameRate: 5,
       repeat: -1,
     });
-// create collision animation for player star pick up
+
+    // create collision animation for player star pick up
     this.anims.create({
       key: 'collide',
       frames: this.anims.generateFrameNumbers('collision'),
@@ -76,7 +82,7 @@ class Scene1 extends Phaser.Scene {
       hideOnComplete: true,
     });
 
-    //create explosion animation for player collision with clone
+    // create explosion animation for player collision with clone
     this.anims.create({
       key: 'explode',
       frames: this.anims.generateFrameNumbers('explosion'),
