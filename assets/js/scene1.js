@@ -1,3 +1,5 @@
+//this scene is used to load up all game assets
+
 class Scene1 extends Phaser.Scene {
   constructor() {
     super('bootGame');
@@ -21,10 +23,7 @@ class Scene1 extends Phaser.Scene {
       frameHeight: 68,
     });
 
-    this.load.spritesheet('clone2', 'assets/spritesheets/clone.png', {
-      frameWidth: 65,
-      frameHeight: 68,
-    });
+
     //load sprite animation for picking up a star
     this.load.spritesheet('collision', 'assets/spritesheets/collision.png', {
       frameWidth: 67,
@@ -46,7 +45,6 @@ class Scene1 extends Phaser.Scene {
 
   }
   create() {
-    //this.add.text(20, 20, 'clone');
     this.scene.start('playGame');
 //create animations for player
     this.anims.create({
@@ -56,7 +54,7 @@ class Scene1 extends Phaser.Scene {
       repeat: -1,
     });
 
-    //create animation  for clone.
+    //create animation  for clone.(is not used in current game play)
     this.anims.create({
       key: 'clone.anim',
       frames: this.anims.generateFrameNumbers('clone2'),

@@ -4,26 +4,17 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-    //this.background = this.add.tile.sprite(
-    // 0,
-    // 0,
-    //  config.width,
-    // config.height,
-    //  'background'
-    // );
-    // this.background.setOrigin(0, 0);
-
+    // add player and its features to game canvas
     this.player = this.physics.add.sprite(
       config.width / 2,
       config.height / 2,
       'player'
     );
-
     this.player.setSize(20, 20);
     this.player.setScale(0.7);
     this.player.play('player.anim');
 
-    //add star physics
+    //add star and its features to game canvas
     this.star = this.physics.add.sprite(randomX, randomY, 'star');
     var randomX = Phaser.Math.Between(0, config.width);
     this.star.x = randomX;
@@ -33,13 +24,13 @@ class Scene2 extends Phaser.Scene {
     this.star.setSize(30, 30);
     this.star.setCollideWorldBounds(true);
 
-    //add clone instances
+    //add clone instances from class.
     this.clones = this.add.group();
     var clone = this.clones;
 
     //add game play sound
-    // this.gameSound = this.sound.add('gamemusic');
-    //this.gameSound.play();
+    this.gameSound = this.sound.add('gamemusic');
+    this.gameSound.play();
 
     //create the score label and score counter.
     this.score = 0;
@@ -48,8 +39,6 @@ class Scene2 extends Phaser.Scene {
       fontFamily: 'arial',
       fill: '#ffff',
     });
-
-    //create lives
 
 
     //create win star function
@@ -61,6 +50,7 @@ class Scene2 extends Phaser.Scene {
       this
     );
 
+    //create player collision with clone function
     this.physics.add.overlap(
       this.player,
       this.clones,
@@ -69,25 +59,25 @@ class Scene2 extends Phaser.Scene {
       this
     );
 
-    //input keys
+    //create input keys for player movement
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.physics.world.setBoundsCollision(true);
     this.player.setCollideWorldBounds(true);
     //this.clone1.setcollideWorldBounds(true);
   }
 
+  // create win star attributes
   starPickup(player, star) {
     var collision = new Collision(this, star.x, star.y);
     this.resetStarPos(star);
-    //add starpickupsound
     this.starpickupSound = this.sound.add('starpickup');
     this.starpickupSound.play();
-    //add score counter
     this.score += 1;
     this.scoreText.setText('score: ' + this.score);
     this.clone = new Clone(this);
   }
 
+  //create player and clone collision attributes
   cloneCollision(player, clones) {
     var explosion = new Explosion(this, this.player.x, this.player.y);
     this.clonepickupSound = this.sound.add('collide');
@@ -96,14 +86,13 @@ class Scene2 extends Phaser.Scene {
     this.player.disableBody(true, true);
     this.player.destroy;
     this.add.text(config.width / 2, config.height / 2, 'GameOver');
-    }
-
+  }
 
   update() {
-    //this.movePlayer(this.player, 0);
     this.movePlayerManager();
   }
 
+  //activate player movement with arrow keys. 
   movePlayerManager() {
     this.player.setVelocity(0);
 
@@ -119,7 +108,7 @@ class Scene2 extends Phaser.Scene {
       this.player.setVelocityY(gameSettings.playerSpeed);
     }
   }
-
+//create star reposition to recreate star every time there is a pick up. I assume there is a better way to create this
   resetStarPos() {
     var randomX = Phaser.Math.Between(0, config.width);
     this.star.x = randomX;
@@ -130,5 +119,3 @@ class Scene2 extends Phaser.Scene {
     this.star.visible = true;
   }
 }
-
-//enemies move in the most recent pathway of the player

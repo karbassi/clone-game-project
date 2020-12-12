@@ -1,3 +1,5 @@
+//create a class for clone to use in game play
+
 class Clone extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'clone1');
@@ -17,6 +19,7 @@ class Clone extends Phaser.GameObjects.Sprite {
     this.body.setVelocity(80, 20);
     this.body.setBounce(true);
 
+    // add clone group to call in the collision function
     scene.clones.add(this);
   }
 }
