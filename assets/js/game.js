@@ -6,7 +6,7 @@ var gameSettings = {
 var config = {
   //ScaleMode: Phaser.Scale.AUTO,
   type: Phaser.Auto,
-  //game canvas size is Iphone SE
+  //game canvas size is Iphone SE size
   width: 320,
   height: 568,
   //this background color is the color of the game.
